@@ -1,0 +1,8 @@
+services:
+  api:
+    build: .                       # costruisce dal Dockerfile nella cartella corrente
+    image: sentiment-api:latest    # nome/tag dell'immagine prodotta
+    container_name: sentiment-api
+    ports:
+      - "8000:8000"
+    restart: unless-stopped        # riavvia se va in crash
