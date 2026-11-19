@@ -285,11 +285,8 @@ Il Personal Access Token ha una scadenza. Generarne uno nuovo e aggiornare la cr
 | **Docker-outside-of-Docker** | Jenkins riusa il Docker dell'host, senza Docker annidato | Agent Jenkins dedicati o build su Kubernetes |
 | **CPU/RAM dal processo invece di cAdvisor** | Metriche già esposte da `prometheus_client`; cAdvisor è poco affidabile su Docker Desktop per Windows | cAdvisor o node-exporter per le metriche di host e container |
 | **Deploy su container locale** | Ambiente di staging su singola macchina | Push su un registry e deploy su server/Kubernetes |
+| **Security scan** | Controlla le dipendenze contro il database delle vulnerabilità note (pip-audit) | tutti |
+
 
 **Limiti del modello**: il modello fornito (CountVectorizer + MultinomialNB) conosce circa 117 parole. La confidence è spesso moderata (es. 0.57 per la frase di esempio) e i testi con sole parole sconosciute ricevono una predizione di default (`negative`, ~0.34). È un comportamento del modello, non del servizio.
 
-### Sviluppi futuri
-- Alert automatici (Grafana Alerting o Alertmanager) su servizio fermo, latenza p95 o tasso di errore elevati
-- Scansione delle vulnerabilità delle dipendenze in pipeline (Snyk o `pip-audit`)
-- Push delle immagini su un registry (Docker Hub / GHCR)
-- Status check obbligatorio di Jenkins sulle Pull Request prima del merge
