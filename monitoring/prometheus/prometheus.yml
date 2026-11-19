@@ -1,0 +1,13 @@
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+
+scrape_configs:
+  - job_name: "prometheus"            # Prometheus monitora anche se stesso
+    static_configs:
+      - targets: ["localhost:9090"]
+
+  - job_name: "sentiment-api"         # il nostro servizio
+    metrics_path: /metrics
+    static_configs:
+      - targets: ["sentiment-api:8000"]   # nome del container, non localhost

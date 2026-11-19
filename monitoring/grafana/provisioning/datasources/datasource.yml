@@ -1,0 +1,9 @@
+apiVersion: 1
+
+datasources:
+  - name: Prometheus
+    uid: prometheus                 # ID fisso: la dashboard lo usa per trovarlo
+    type: prometheus
+    access: proxy
+    url: http://prometheus:9090     # di nuovo, il nome del container
+    isDefault: true
