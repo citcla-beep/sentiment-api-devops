@@ -1,3 +1,14 @@
+def notifyDiscord(String esito) {
+    withCredentials([string(credentialsId: 'discord-webhook', variable: 'WEBHOOK')]) {
+        def msg = "${esito} **${env.JOB_NAME}** #${env.BUILD_NUMBER} (commit ${env.IMAGE_TAG})\\n${env.BUILD_URL}"
+        sh """
+            curl -fsS -H 'Content-Type: application/json' \
+              -d '{"content": "${msg}"}' \
+              "\$WEBHOOK"
+        """
+    }
+}
+
 pipeline {
     agent any
 
@@ -70,6 +81,17 @@ pipeline {
                       -d '{"review": "This product is amazing! I love it."}' | grep -q positive
                 """
             }
+        }
+    }
+     post {
+        success {
+            script { notifyDiscord(':white_check_mark: BUILD RIUSCITA') }
+        }
+        failure {
+            script { notifyDiscord(':x: BUILD FALLITA') }
+        }
+        cleanup {
+            sh 'docker image prune -f || true'
         }
     }
 }
