@@ -54,6 +54,14 @@ pipeline {
                 }
             }
         }
+        stage('Security scan') {
+            steps {
+                sh """
+                    docker run --rm --user root ${IMAGE_NAME}:${IMAGE_TAG} \
+                      sh -c "pip install -q pip-audit && pip-audit -r requirements.txt --no-deps --disable-pip"
+                """
+            }
+        }
 
         stage('Deploy') {
             when { branch 'main' }
