@@ -1,0 +1,14 @@
+services:
+  jenkins:
+    build: .
+    container_name: jenkins
+    user: root                     # semplifica l'accesso a docker.sock (vedi nota)
+    ports:
+      - "8080:8080"                # interfaccia web
+    volumes:
+      - jenkins_home:/var/jenkins_home              # dati persistenti
+      - /var/run/docker.sock:/var/run/docker.sock   # il "telecomando" del Docker del PC
+    restart: unless-stopped
+
+volumes:
+  jenkins_home:
